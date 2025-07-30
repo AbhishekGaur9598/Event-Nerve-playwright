@@ -44,6 +44,6 @@ const searchResult = page.locator('table tr', { hasText: eventName });
 await expect(searchResult).toBeVisible({ timeout: 10000 });
 console.log(`✅ Event "${eventName}" found in search results.`);
 
-await page.pause();
+// await page.pause();
 
 });
