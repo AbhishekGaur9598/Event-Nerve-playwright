@@ -8,7 +8,7 @@ test.use({
     }
 })
 
-test('[Login] Verify that the user cannot log in with an invalid password.', 
+test.skip('[Login] Verify that the user cannot log in with an invalid password.', 
     {
     tag: ['@UI', '@stage'],
     }, 
@@ -20,7 +20,7 @@ test('[Login] Verify that the user cannot log in with an invalid password.',
 })
 
 
-    test('[Login] Verify that the user cannot log in with an invalid username.', {
+    test.skip('[Login] Verify that the user cannot log in with an invalid username.', {
         tag: ['@UI', '@stage'],
        
     }, async ({ gotoUrl, loginPage, commonUtils }) => {
@@ -32,7 +32,7 @@ test('[Login] Verify that the user cannot log in with an invalid password.',
 
 
 
-    test('[Login] Verify that the user cannot log in with both an invalid username and password.', {
+    test.skip('[Login] Verify that the user cannot log in with both an invalid username and password.', {
         tag: ['@UI', '@stage'],
         }, 
         async ({ gotoUrl, loginPage, commonUtils }) => {

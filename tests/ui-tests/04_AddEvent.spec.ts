@@ -20,7 +20,7 @@ test('[TeamMember] Add Team Member', { tag: ['@UI', '@stage'] }, async ({ gotoUr
   // Navigate to Events
  addEvent.clickEventLink();
   // Click Add Event
- addEvent.NavigateAddEventPage();
+ addEvent.navigateToAddEventPage();
 // Fill Event Name
    const eventName = EventUtils.generateUniqueEventName();
    EventUtils.saveEventName(eventName);

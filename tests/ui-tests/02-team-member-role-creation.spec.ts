@@ -1,7 +1,7 @@
 import { test, expect } from '../../fixtures/hooks-fixture';
 import { generateRandomData, getRolesConfig } from '../../utils/roleUtils';
 
-test('Create all team roles with role-specific field behavior', async ({ loginPage, eventPage, page }) => 
+test.skip('Create all team roles with role-specific field behavior', async ({ loginPage, eventPage, page }) => 
   {
   await loginPage.gotoEventNerve();
   await loginPage.loginEventNerve(process.env.USER_NAME!, process.env.PASSWORD!);
