@@ -1,6 +1,7 @@
 import {test as baseTest} from './common-fixture';
 
-type HooksFixtureType = {
+type HooksFixtureType = 
+{
     gotoUrl: any;
  
 }
