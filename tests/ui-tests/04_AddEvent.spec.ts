@@ -1,46 +1,49 @@
 import { test, expect } from '../../fixtures/hooks-fixture.ts';
-import { generateRandomData } from '../../utils/team-member-generator.ts';
-import loginModuleData from '../../data/ui-data/login-module-data.json';
 import * as fs from 'fs';
+import loginModuleData from '../../data/ui-data/login-module-data.json';
+import { EventUtils } from '../../utils/AddEventUtils.ts';
 
-
-// // Load Event Admin Name from team-member-data.json
+// Load data files
 const teamData = JSON.parse(fs.readFileSync('data/ui-data/team-member-data.json', 'utf-8'));
-const eventAdminName = teamData.name;
 
 test.use({
-    storageState: {
-        cookies: [],
-        origins: []
-    }
-})
+  storageState: {
+    cookies: [],
+    origins: [],
+  },
+});
 
-test('[TeamMember] Add Team Member', 
-    {
-        tag: ['@UI', '@stage'],
-    }, 
-    async ({ gotoUrl,loginPage, eventPage,page,addEvent}) => 
-    {
-    // Login first
-    await loginPage.gotoEventNerve();
-    await loginPage.loginEventNerve(process.env.USER_NAME!, process.env.PASSWORD!);
-    
-    //click Event link
-    await page.locator("//div[@class='pageMainSidebar']//a[@title='Events']").click();
-    // Check a key element Add Event page tittle display or not
-    await expect(page.locator("//span[@class='mail-title tablesSectionTitle']")).toBeVisible();
-    //click on Add Event Button
-    await page.locator("//span[normalize-space()='Add Event']").click();
+test('[TeamMember] Add Team Member', { tag: ['@UI', '@stage'] }, async ({ gotoUrl, loginPage, eventPage, page, addEvent }) => {
+  // Login
+  await loginPage.gotoEventNerve();
+  await loginPage.loginEventNerve(process.env.USER_NAME!, process.env.PASSWORD!);
+  // Navigate to Events
+ addEvent.clickEventLink();
+  // Click Add Event
+ addEvent.NavigateAddEventPage();
+// Fill Event Name
+   const eventName = EventUtils.generateUniqueEventName();
+   EventUtils.saveEventName(eventName);
+   await page.fill('input[placeholder="Enter event name"]', eventName); 
+// Select Event Admin
+await addEvent.selectEventAdmin(teamData.name);
 
-     // Assert modal is visible
-     await expect(page.locator("//h4[normalize-space()='Add New Event']")).toBeVisible();
-     
-   // Fill in Event Details
-   await page.fill('input[placeholder="Enter event name"]', 'Playwright Test Event');
+//set startdate and start Time
+await addEvent.fillStartDateAndStartTime();
+//set Enddate and End Time
+await addEvent.fillEndDateAndEndTime();
+//click save Button
+await addEvent.clickSaveBtn();
+//verify Successmsg
+await addEvent.successMessage();
 
-  // Select Event Admin
-   await addEvent.selectEventAdmin(eventAdminName);
+// 🔍 Search for the created event by name
+await page.locator('input[placeholder="Search Events"]').fill(eventName);
+// ✅ Verify the event appears in the search result
+const searchResult = page.locator('table tr', { hasText: eventName });
+await expect(searchResult).toBeVisible({ timeout: 10000 });
+console.log(`✅ Event "${eventName}" found in search results.`);
 
-   await page.pause();
+await page.pause();
 
-    });
+});
