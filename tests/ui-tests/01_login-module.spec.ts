@@ -8,7 +8,7 @@ test.use({
     }
 })
 
-test.skip('[Login] Verify that the user cannot log in with an invalid password.', 
+test('[Login] Verify that the user cannot log in with an invalid password.', 
     {
     tag: ['@UI', '@stage'],
     }, 
