@@ -10,7 +10,7 @@ test.use({
     }
 })
 
-test.skip('[TeamMember] Create team member with dynamic data and verify creation', 
+test('[TeamMember] Create team member with dynamic data and verify creation', 
     {
         tag: ['@UI', '@stage'],
     }, 
