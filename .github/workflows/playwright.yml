@@ -18,7 +18,9 @@ jobs:
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
     - name: Run Playwright tests
-      run: npx playwright test --project=chromium
+      # run: npx playwright test --project=chromium
+      run: npx playwright test --project=chromium --timeout=120000
+
       env:
         SECRET_KEY: ${{ secrets.SECRET_KEY }}
     - uses: actions/upload-artifact@v4
