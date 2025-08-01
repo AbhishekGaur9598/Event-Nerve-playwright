@@ -46,7 +46,7 @@ export class EventPage {
     await this.addEventButton.click();
 
     // Step 2: Wait for navigation or loading to complete (if it causes a page change)
-    await this.page.waitForLoadState('networkidle', { timeout: 15000 }); // waits till network is idle
+    // await this.page.waitForLoadState('networkidle', { timeout: 15000 }); // waits till network is idle
 
     // OR if there's navigation involved:
     // await this.page.waitForURL('**/user/home-page/users/user-list', { timeout: 15000 });
