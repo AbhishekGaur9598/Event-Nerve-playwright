@@ -37,7 +37,7 @@ await addEvent.fillStartDateAndStartTime();
 await addEvent.fillEndDateAndEndTime();
 //click save Button
 await addEvent.clickSaveBtn();
-//verify Successmsg
+// verify Successmsg
 await addEvent.successMessage();
 
 const searchInput = page.locator('input[placeholder="Search Events"]');
