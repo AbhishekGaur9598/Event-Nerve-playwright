@@ -34,11 +34,30 @@ export class EventPage {
        
     }
 
-    async clickAddNewEvent() 
-    {
-        await this.addEventButton.click();
-        await this.createTeamMemberBtn.click();
-    }
+    // async clickAddNewEvent() 
+    // {
+    //     await this.addEventButton.click();
+    //     await this.createTeamMemberBtn.click();
+    // }
+
+    async clickAddNewEvent() {
+    // Step 1: Click on "Add Event" button
+    await this.addEventButton.waitFor({ state: 'visible', timeout: 10000 });
+    await this.addEventButton.click();
+
+    // Step 2: Wait for navigation or loading to complete (if it causes a page change)
+    await this.page.waitForLoadState('networkidle', { timeout: 15000 }); // waits till network is idle
+
+    // OR if there's navigation involved:
+    // await this.page.waitForURL('**/user/home-page/users/user-list', { timeout: 15000 });
+
+    // Step 3: Ensure "Create Team Member" button is visible and stable
+    await this.createTeamMemberBtn.waitFor({ state: 'visible', timeout: 10000 });
+
+    // Step 4: Click on "Create Team Member" safely
+    await this.createTeamMemberBtn.click();
+}
+
 
 //    async selectMemberType(value: string) 
 //   {

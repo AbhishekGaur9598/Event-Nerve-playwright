@@ -48,7 +48,7 @@ await expect(searchResult).toBeVisible({ timeout: 300 });
 
 console.log(`✅ Event "${eventName}" found in search results.`);
 
-await page.waitForLoadState('networkidle');
+// await page.waitForLoadState('networkidle');
 
 // await page.pause();
 
