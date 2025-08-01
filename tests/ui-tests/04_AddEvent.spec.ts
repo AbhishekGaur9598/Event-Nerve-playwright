@@ -13,7 +13,10 @@ test.use({
   },
 });
 
-test('[TeamMember] Add Team Member', { tag: ['@UI', '@stage'] }, async ({ gotoUrl, loginPage, eventPage, page, addEvent }) => {
+test('[TeamMember] Add Team Member', 
+  // { tag: ['@UI', '@stage'] }, 
+  
+  async ({ gotoUrl, loginPage, eventPage, page, addEvent }) => {
   // Login
   await loginPage.gotoEventNerve();
   await loginPage.loginEventNerve(process.env.USER_NAME!, process.env.PASSWORD!);

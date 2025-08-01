@@ -42,56 +42,27 @@ export class AddEvent {
   }
 
 
-// async selectEventAdmin(eventAdminName: string) {
-//   await this.eventAdminDropdown.waitFor({ state: 'visible', timeout: 5000 });
-//   // await this.page.waitForTimeout(1000); // wait before inspecting options
-
-//   const normalizedName = eventAdminName.trim().toLowerCase();
-
-//   // Get all option values and labels at once
-//   const options = await this.eventAdminDropdown.locator('option').all();
-
-//   for (const option of options) {
-//     const label = (await option.textContent())?.trim().toLowerCase();
-//     if (label === normalizedName) {
-//       const value = await option.getAttribute('value');
-//       if (value) {
-//         await this.eventAdminDropdown.selectOption(value);
-//         console.log(`✅ Selected Event Admin: ${eventAdminName}`);
-//         // await this.page.waitForTimeout(1000); // wait after selecting
-
-//         return;
-//       }
-//     }
-//   }
-
-//   throw new Error(`❌ Team member not found in dropdown: ${eventAdminName}`);
-// }
-
 async selectEventAdmin(eventAdminName: string) {
-  await this.eventAdminDropdown.waitFor({ state: 'visible', timeout: 10000 });
+  await this.eventAdminDropdown.waitFor({ state: 'visible', timeout: 5000 });
+  // await this.page.waitForTimeout(1000); // wait before inspecting options
 
   const normalizedName = eventAdminName.trim().toLowerCase();
 
-  // Retry loop to wait for dropdown options to load
-  for (let retry = 0; retry < 5; retry++) {
-    const options = await this.eventAdminDropdown.locator('option').all();
+  // Get all option values and labels at once
+  const options = await this.eventAdminDropdown.locator('option').all();
 
-    for (const option of options) {
-      const label = (await option.textContent())?.trim().toLowerCase();
+  for (const option of options) {
+    const label = (await option.textContent())?.trim().toLowerCase();
+    if (label === normalizedName) {
+      const value = await option.getAttribute('value');
+      if (value) {
+        await this.eventAdminDropdown.selectOption(value);
+        console.log(`✅ Selected Event Admin: ${eventAdminName}`);
+        // await this.page.waitForTimeout(1000); // wait after selecting
 
-      if (label === normalizedName) {
-        const value = await option.getAttribute('value');
-        if (value) {
-          await this.eventAdminDropdown.selectOption(value);
-          console.log(`✅ Selected Event Admin: ${eventAdminName}`);
-          return;
-        }
+        return;
       }
     }
-
-    console.log(`⏳ Retry ${retry + 1}: '${eventAdminName}' not yet found. Waiting 1s...`);
-    await this.page.waitForTimeout(1000); // wait and try again
   }
 
   throw new Error(`❌ Team member not found in dropdown: ${eventAdminName}`);

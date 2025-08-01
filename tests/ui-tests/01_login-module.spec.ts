@@ -9,9 +9,9 @@ test.use({
 })
 
 test('[Login] Verify that the user cannot log in with an invalid password.', 
-    {
-    tag: ['@UI', '@stage'],
-    }, 
+    // {
+    // tag: ['@UI', '@stage'],
+    // }, 
     async ({ gotoUrl, loginPage, commonUtils }) => {
     const username = process.env.USER_NAME!;
     await loginPage.loginEventNerve(username, loginModuleData.wrong_password);
@@ -21,7 +21,7 @@ test('[Login] Verify that the user cannot log in with an invalid password.',
 
 
     test('[Login] Verify that the user cannot log in with an invalid username.', {
-        tag: ['@UI', '@stage'],
+        // tag: ['@UI', '@stage'],
        
     }, async ({ gotoUrl, loginPage, commonUtils }) => {
         const password = process.env.PASSWORD!;
@@ -32,9 +32,10 @@ test('[Login] Verify that the user cannot log in with an invalid password.',
 
 
 
-    test('[Login] Verify that the user cannot log in with both an invalid username and password.', {
-        tag: ['@UI', '@stage'],
-        }, 
+    test('[Login] Verify that the user cannot log in with both an invalid username and password.', 
+        // {
+        // tag: ['@UI', '@stage'],
+        // }, 
         async ({ gotoUrl, loginPage, commonUtils }) => {
         await loginPage.loginEventNerve(loginModuleData.wrong_username, loginModuleData.wrong_password);
         await expect(loginPage.invelidCredentialsErrorPopup).toHaveText(loginModuleData.invelid_credentials_text);
