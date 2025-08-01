@@ -43,17 +43,23 @@ export class AddEvent {
 
 
 async selectEventAdmin(eventAdminName: string) {
-  await expect(this.eventAdminDropdown).toBeVisible();
+  await this.eventAdminDropdown.waitFor({ state: 'visible', timeout: 5000 });
+  // await this.page.waitForTimeout(1000); // wait before inspecting options
 
+  const normalizedName = eventAdminName.trim().toLowerCase();
+
+  // Get all option values and labels at once
   const options = await this.eventAdminDropdown.locator('option').all();
 
   for (const option of options) {
-    const text = (await option.textContent())?.trim().toLowerCase();
-    if (text === eventAdminName.trim().toLowerCase()) {
+    const label = (await option.textContent())?.trim().toLowerCase();
+    if (label === normalizedName) {
       const value = await option.getAttribute('value');
       if (value) {
         await this.eventAdminDropdown.selectOption(value);
         console.log(`✅ Selected Event Admin: ${eventAdminName}`);
+        // await this.page.waitForTimeout(1000); // wait after selecting
+
         return;
       }
     }
@@ -61,6 +67,7 @@ async selectEventAdmin(eventAdminName: string) {
 
   throw new Error(`❌ Team member not found in dropdown: ${eventAdminName}`);
 }
+
 
 
   async fillStartDateAndStartTime() {

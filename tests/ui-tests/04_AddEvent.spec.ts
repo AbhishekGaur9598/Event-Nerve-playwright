@@ -37,12 +37,18 @@ await addEvent.clickSaveBtn();
 //verify Successmsg
 await addEvent.successMessage();
 
-// // 🔍 Search for the created event by name
-// await page.locator('input[placeholder="Search Events"]').fill(eventName);
-// // ✅ Verify the event appears in the search result
-// const searchResult = page.locator('table tr', { hasText: eventName });
-// await expect(searchResult).toBeVisible({ timeout: 10000 });
-// console.log(`✅ Event "${eventName}" found in search results.`);
+const searchInput = page.locator('input[placeholder="Search Events"]');
+await searchInput.clear(); // clear old input
+await searchInput.type(eventName, { delay: 20 }); // simulate real typing
+
+await page.waitForTimeout(300); // wait for debounce/render
+
+const searchResult = page.locator('table tr', { hasText: eventName });
+await expect(searchResult).toBeVisible({ timeout: 300 });
+
+console.log(`✅ Event "${eventName}" found in search results.`);
+
+await page.waitForLoadState('networkidle');
 
 // await page.pause();
 

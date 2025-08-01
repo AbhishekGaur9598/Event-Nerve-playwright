@@ -27,13 +27,14 @@ export default defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 3 : 1,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: [['html', { open: 'never' }],['junit', { outputFile: 'test-results/junit-report.xml'}]],
+  reporter: [['html', { open: 'always' }],['junit', { outputFile: 'test-results/junit-report.xml'}]],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   timeout: 90000,
   expect: {
     timeout: 30000,
   },
   use: {
+   
     /* Base URL to use in actions like `await page.goto('/')`. */
     // baseURL: 'http://127.0.0.1:3000',
     // baseURL: process.env.API_BASE_URL,
@@ -47,7 +48,9 @@ export default defineConfig({
     video: 'retain-on-failure',
     trace: 'retain-on-failure',
   },
-
+  
+ // ✅ Slow motion setup
+      
   /* Configure projects for major browsers */
   projects: [
     {
@@ -79,19 +82,10 @@ export default defineConfig({
         ...devices['Desktop Safari'],
         storageState: './playwright/.auth/auth.json'
       },
+    
     },
-    {
-      name: 'apiTest',
-      testDir: './tests/api-tests',
-      use: {
-        baseURL: process.env.API_BASE_URL,
-        extraHTTPHeaders: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          // Authorization:"Basic YWRtaW46cGFzc3dvcmQxMjM="
-        },
-      }
-    }
+    
+      
 
     /* Test against mobile viewports. */
     // {
